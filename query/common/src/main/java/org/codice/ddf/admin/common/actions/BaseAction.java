@@ -101,20 +101,28 @@ public abstract class BaseAction<T extends Field> implements Action<T> {
     }
 
     protected BaseAction addArgumentMessages(List<Message> msgs) {
-        msgs.forEach(msg -> addArgumentMessage(msg));
+        msgs.forEach(this::addArgumentMessage);
         return this;
     }
 
     protected BaseAction addReturnValueMessages(List<Message> msgs) {
-        msgs.forEach(msg -> addReturnValueMessage(msg));
+        msgs.forEach(this::addReturnValueMessage);
         return this;
     }
 
     public void validate() {
         getArguments().stream()
+                .filter(Field::isRequired)
                 .map(Field::validate)
                 .flatMap(Collection<Message>::stream)
-                .forEach(msg -> addArgumentMessage(msg));
+                .forEach(this::addArgumentMessage);
+
+        getArguments().stream()
+                .filter(field -> !field.isRequired())
+                .filter(field -> field.getValue() != null)
+                .map(Field::validate)
+                .flatMap(Collection<Message>::stream)
+                .forEach(this::addArgumentMessage);
     }
 
     public abstract T performAction();

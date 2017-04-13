@@ -38,6 +38,24 @@ public class AddressField extends BaseObjectField {
         this.port = new PortField();
     }
 
+    public AddressField hostname(String hostname) {
+        this.hostname.setValue(hostname);
+        return this;
+    }
+
+    public AddressField port(int port) {
+        this.port.setValue(port);
+        return this;
+    }
+
+    public int port() {
+        return this.port.getValue();
+    }
+
+    public String hostname() {
+        return this.hostname.getValue();
+    }
+
     @Override
     public List<Field> getFields() {
         return ImmutableList.of(hostname, port);

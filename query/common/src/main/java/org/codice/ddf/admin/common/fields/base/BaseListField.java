@@ -56,7 +56,7 @@ public abstract class BaseListField<T extends Field> extends BaseField<List>
     @Override
     public List getValue() {
         return fields.stream()
-                .map(field -> field.getValue())
+                .map(Field::getValue)
                 .collect(Collectors.toList());
     }
 
@@ -92,7 +92,7 @@ public abstract class BaseListField<T extends Field> extends BaseField<List>
 
     @Override
     public BaseListField addAll(List<T> values) {
-        values.forEach(field -> add(field));
+        values.forEach(this::add);
         return this;
     }
 

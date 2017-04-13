@@ -13,21 +13,29 @@
  **/
 package org.codice.ddf.admin.sources.fields;
 
+import java.util.List;
+
 import org.codice.ddf.admin.common.fields.base.BaseListField;
 
 public class SourceInfoListField extends BaseListField<SourceInfoField> {
 
     public static final String DEFAULT_FIELD_NAME = "sourceConfigs";
 
-    public static final String DESCRIPTION = "A list of source configurations";
+    public static final String DESCRIPTION = "A list of source configurations.";
 
     public SourceInfoListField() {
-        super(DEFAULT_FIELD_NAME, DESCRIPTION, new SourceInfoField().allFieldsRequired(true));
+        super(DEFAULT_FIELD_NAME, DESCRIPTION, new SourceInfoField());
     }
 
     @Override
     public SourceInfoListField add(SourceInfoField value) {
         super.add(value);
+        return this;
+    }
+
+    @Override
+    public SourceInfoListField addAll(List<SourceInfoField> values) {
+        values.forEach(this::add);
         return this;
     }
 }

@@ -58,14 +58,12 @@ public class SourceInfoField extends BaseObjectField {
         return this;
     }
 
-    @Override
-    public List<Field> getFields() {
-        return ImmutableList.of(isAvailable, sourceHandlerName, config);
+    public SourceConfigUnionField config() {
+        return config;
     }
 
     @Override
-    public SourceInfoField allFieldsRequired(boolean required) {
-        super.allFieldsRequired(required);
-        return this;
+    public List<Field> getFields() {
+        return ImmutableList.of(isAvailable, sourceHandlerName, config);
     }
 }

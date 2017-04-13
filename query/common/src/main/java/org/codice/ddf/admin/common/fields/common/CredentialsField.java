@@ -49,6 +49,14 @@ public class CredentialsField extends BaseObjectField {
         return this;
     }
 
+    public String password() {
+        return this.password.getValue();
+    }
+
+    public String username() {
+        return this.username.getValue();
+    }
+
     @Override
     public List<Field> getFields() {
         return ImmutableList.of(username, password);

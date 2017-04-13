@@ -45,9 +45,11 @@ public abstract class BaseObjectField extends BaseField<Map<String, Object>>
 
     @Override
     public void setValue(Map<String, Object> values) {
-        getFields().stream()
-                .filter(field -> values.containsKey(field.fieldName()))
-                .forEach(field -> field.setValue(values.get(field.fieldName())));
+        if(values != null) {
+            getFields().stream()
+                    .filter(field -> values.containsKey(field.fieldName()))
+                    .forEach(field -> field.setValue(values.get(field.fieldName())));
+        }
     }
 
     @Override
@@ -69,9 +71,7 @@ public abstract class BaseObjectField extends BaseField<Map<String, Object>>
 
     @Override
     public BaseObjectField allFieldsRequired(boolean required) {
-        if (required) {
-            isRequired(required);
-        }
+        super.isRequired(required);
 
         getFields().stream()
                 .map(field -> field.isRequired(required))
@@ -82,20 +82,12 @@ public abstract class BaseObjectField extends BaseField<Map<String, Object>>
     }
 
     @Override
-    public BaseObjectField innerFieldRequired(boolean required, String fieldName) {
-        if (required) {
-            isRequired(true);
+    public BaseObjectField isRequired(boolean required) {
+        if(!required) {
+            this.allFieldsRequired(false);
+        } else {
+            super.isRequired(true);
         }
-
-        getFields().stream()
-                .filter(field -> field.fieldName()
-                        .equals(fieldName))
-                .forEach(field -> field.isRequired(required));
-
-        getFields().stream()
-                .filter(field -> field instanceof ObjectField)
-                .map(ObjectField.class::cast)
-                .forEach(objField -> objField.innerFieldRequired(required, fieldName));
         return this;
     }
 }

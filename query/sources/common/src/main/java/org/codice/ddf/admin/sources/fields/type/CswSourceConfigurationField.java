@@ -33,8 +33,11 @@ public class CswSourceConfigurationField extends SourceConfigUnionField {
 
     public CswSourceConfigurationField() {
         super(FIELD_TYPE_NAME, DESCRIPTION);
-        this.endpointUrl.setValue("SampleCswUrl");
-        this.id.setValue("SampleCswId");
+    }
+
+    public CswSourceConfigurationField(List<String> validFactoryPids) {
+        this();
+        super.setValidFactoryPids(validFactoryPids);
     }
 
     public CswSourceConfigurationField outputSchema(String outputSchema) {
@@ -47,23 +50,19 @@ public class CswSourceConfigurationField extends SourceConfigUnionField {
         return this;
     }
 
+    public String outputSchema() {
+        return outputSchema.getValue();
+    }
+
+    public String forceSpatialFilter() {
+        return forceSpatialFilter.getValue();
+    }
+
     @Override
     public List<Field> getFields() {
         return new ImmutableList.Builder<Field>().addAll(super.getFields())
                 .add(outputSchema)
                 .add(forceSpatialFilter)
                 .build();
-    }
-
-    @Override
-    public CswSourceConfigurationField allFieldsRequired(boolean required) {
-        super.allFieldsRequired(required);
-        return this;
-    }
-
-    @Override
-    public CswSourceConfigurationField innerFieldRequired(boolean required, String fieldName) {
-        super.innerFieldRequired(required, fieldName);
-        return this;
     }
 }

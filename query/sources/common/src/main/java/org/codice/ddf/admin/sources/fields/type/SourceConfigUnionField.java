@@ -19,9 +19,12 @@ import org.codice.ddf.admin.api.fields.Field;
 import org.codice.ddf.admin.api.fields.ObjectField;
 import org.codice.ddf.admin.common.fields.base.BaseUnionField;
 import org.codice.ddf.admin.common.fields.base.scalar.StringField;
+import org.codice.ddf.admin.common.fields.common.AddressField;
 import org.codice.ddf.admin.common.fields.common.CredentialsField;
-import org.codice.ddf.admin.common.fields.common.PidField;
 import org.codice.ddf.admin.common.fields.common.UrlField;
+import org.codice.ddf.admin.sources.commons.SourceCommons;
+import org.codice.ddf.admin.sources.fields.FactoryPid;
+import org.codice.ddf.admin.sources.fields.ServicePid;
 
 import com.google.common.collect.ImmutableList;
 
@@ -33,18 +36,30 @@ public class SourceConfigUnionField extends BaseUnionField {
 
     public static final String DESCRIPTION = "All supported source configuration types";
 
+    public static final String FACTORY_PID_FIELD = SourceCommons.FACTORY_PID;
+
+    public static final String SERVICE_PID_FIELD = SourceCommons.SERVICE_PID;
+
+    public static final String SOURCE_HOSTNAME_FIELD = SourceCommons.SOURCE_HOSTNAME;
+
+    public static final String ENDPOINT_URL_FIELD = SourceCommons.ENDPOINT_URL;
+
     private static final List<ObjectField> UNION_TYPES =
             ImmutableList.of(new CswSourceConfigurationField(),
                     new WfsSourceConfigurationField(),
                     new OpensearchSourceConfigurationField());
 
-    protected PidField id = new PidField();
+    protected FactoryPid factoryPid;
 
-    protected StringField sourceName = new StringField("sourceName");
+    protected ServicePid servicePid;
 
-    protected UrlField endpointUrl = new UrlField("endpointUrl");
+    protected StringField sourceName;
 
-    protected CredentialsField creds = new CredentialsField();
+    protected UrlField endpointUrl;
+
+    protected CredentialsField creds;
+
+    protected AddressField address;
 
     public SourceConfigUnionField() {
         super(FIELD_NAME, FIELD_TYPE_NAME, DESCRIPTION, UNION_TYPES, false);
@@ -52,10 +67,21 @@ public class SourceConfigUnionField extends BaseUnionField {
 
     protected SourceConfigUnionField(String fieldTypeName, String description) {
         super(FIELD_NAME, fieldTypeName, description, UNION_TYPES, true);
+        factoryPid = new FactoryPid(FACTORY_PID_FIELD);
+        servicePid = new ServicePid(SERVICE_PID_FIELD);
+        sourceName = new StringField(SOURCE_HOSTNAME_FIELD);
+        endpointUrl = new UrlField(ENDPOINT_URL_FIELD);
+        creds = new CredentialsField();
+        address = new AddressField();
     }
 
-    public SourceConfigUnionField id(String id) {
-        this.id.setValue(id);
+    public SourceConfigUnionField factoryPid(String factoryPid) {
+        this.factoryPid.setValue(factoryPid);
+        return this;
+    }
+
+    public SourceConfigUnionField servicePid(String servicePid) {
+        this.servicePid.setValue(servicePid);
         return this;
     }
 
@@ -75,8 +101,43 @@ public class SourceConfigUnionField extends BaseUnionField {
         return this;
     }
 
+    public SourceConfigUnionField address(String hostname, int port) {
+        address.hostname(hostname);
+        address.port(port);
+        return this;
+    }
+
+    public String sourceName() {
+        return sourceName.getValue();
+    }
+
+    public CredentialsField credentials() {
+        return this.creds;
+    }
+
+    public String factoryPid() {
+        return factoryPid.getValue();
+    }
+
+    public String servicePid() {
+        return servicePid.getValue();
+    }
+
+    public AddressField address() {
+        return address;
+    }
+
+    public String endpointUrl() {
+        return endpointUrl.getValue();
+    }
+
+    public SourceConfigUnionField setValidFactoryPids(List<String> factoryPids) {
+        factoryPid.setValidFactoryPids(factoryPids);
+        return this;
+    }
+
     @Override
     public List<Field> getFields() {
-        return ImmutableList.of(id, sourceName, endpointUrl, creds);
+        return ImmutableList.of(factoryPid, servicePid, sourceName, endpointUrl, creds, address);
     }
 }
