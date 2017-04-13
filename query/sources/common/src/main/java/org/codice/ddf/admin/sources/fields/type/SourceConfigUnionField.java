@@ -40,7 +40,7 @@ public class SourceConfigUnionField extends BaseUnionField {
 
     public static final String SERVICE_PID_FIELD = SourceCommons.SERVICE_PID;
 
-    public static final String SOURCE_HOSTNAME_FIELD = SourceCommons.SOURCE_HOSTNAME;
+    public static final String SOURCE_HOSTNAME_FIELD = "sourceName";
 
     public static final String ENDPOINT_URL_FIELD = SourceCommons.ENDPOINT_URL;
 

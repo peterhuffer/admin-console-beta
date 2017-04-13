@@ -14,6 +14,7 @@
 package org.codice.ddf.admin.sources.csw.utils;
 
 import static java.net.HttpURLConnection.HTTP_OK;
+import static org.codice.ddf.admin.common.message.DefaultMessages.unknownEndpointError;
 import static org.codice.ddf.admin.sources.commons.SourceCommons.DISCOVERED_SOURCES;
 import static org.codice.ddf.admin.sources.commons.SourceCommons.DISCOVERED_URL;
 import static org.codice.ddf.admin.sources.commons.SourceCommons.SOURCES_NAMESPACE_CONTEXT;
@@ -100,7 +101,8 @@ public class CswSourceUtils {
             return discoveredUrl;
         }
 
-        return new DiscoveredUrl(Collections.singletonList(SourceCommons.UNKNOWN_ENDPOINT_MESSAGE));
+        return new DiscoveredUrl(Collections.singletonList(unknownEndpointError(
+                "exampleValue"))); // TODO: 4/13/17 How to pass field ids around?
     }
 
     /**
@@ -122,7 +124,7 @@ public class CswSourceUtils {
                 .map(url -> sendCswCapabilitiesRequest(url, username, password))
                 .filter(discoveredUrl -> !discoveredUrl.hasErrors())
                 .findFirst()
-                .orElse(new DiscoveredUrl(Collections.singletonList(SourceCommons.UNKNOWN_ENDPOINT_MESSAGE)));
+                .orElse(new DiscoveredUrl(Collections.singletonList(unknownEndpointError("exampleValue"))));
     }
 
     /**
@@ -154,10 +156,9 @@ public class CswSourceUtils {
         }
 
         CswSourceConfigurationField preferred = new CswSourceConfigurationField();
-        preferred.endpointUrl(url);
-        preferred.credentials()
-                .username(username);
-        preferred.credentials()
+        preferred.endpointUrl(url)
+                .credentials()
+                .username(username)
                 .password(password);
 
         XPath xpath = XPathFactory.newInstance()

@@ -48,7 +48,7 @@ public class AddressField extends BaseObjectField {
         return this;
     }
 
-    public int port() {
+    public Integer port() {
         return this.port.getValue();
     }
 

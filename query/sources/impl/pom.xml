@@ -63,6 +63,12 @@
             <version>3.5</version>
         </dependency>
 
+        <dependency>
+            <groupId>ddf.catalog.core</groupId>
+            <artifactId>catalog-core-api</artifactId>
+            <version>${ddf.version}</version>
+        </dependency>
+
         <!--Spock dependencies-->
         <dependency>
             <groupId>ddf.lib</groupId>

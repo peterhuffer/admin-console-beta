@@ -56,10 +56,6 @@ public class DiscoverCswByAddressAction extends BaseAction<SourceInfoField> {
 
     @Override
     public SourceInfoField performAction() {
-        SourceInfoField sourceInfoField = new SourceInfoField();
-        sourceInfoField.isAvaliable(true);
-        sourceInfoField.sourceHandlerName(ID);
-
         String un = credentialsField.username();
         String pw = credentialsField.password();
 
@@ -71,15 +67,19 @@ public class DiscoverCswByAddressAction extends BaseAction<SourceInfoField> {
                 pw);
 
         testUrl = discoveredUrl.get(DISCOVERED_URL);
-        discoveredUrl.getMessages()
-                .forEach(this::addArgumentMessage);
+        discoveredUrl.getMessages().forEach(this::addReturnValueMessage);
 
-        DiscoveredUrl anotherOne = cswSourceUtils.getPreferredCswConfig(testUrl, un, pw);
-        anotherOne.getMessages()
-                .forEach(this::addArgumentMessage);
+        discoveredUrl = cswSourceUtils.getPreferredCswConfig(testUrl, un, pw);
+        discoveredUrl.getMessages().forEach(this::addReturnValueMessage);
 
-        sourceInfoField.configuration(anotherOne.get(DISCOVERED_SOURCES));
+        if(discoveredUrl.get(DISCOVERED_SOURCES) != null) {
+            SourceInfoField sourceInfoField = new SourceInfoField();
+            sourceInfoField.isAvaliable(true);
+            sourceInfoField.sourceHandlerName(ID);
+            sourceInfoField.configuration(discoveredUrl.get(DISCOVERED_SOURCES));
+            return sourceInfoField;
+        }
 
-        return sourceInfoField;
+        return null;
     }
 }

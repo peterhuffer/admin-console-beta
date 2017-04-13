@@ -30,14 +30,9 @@ public abstract class BaseEnumField<S> extends BaseField<S> implements EnumField
     private List<Field<S>> enumValues;
 
     public BaseEnumField(String fieldName, String fieldTypeName, String description,
-            List<Field<S>> enumValues) {
+            List<Field<S>> enumValues, Field<S> enumValue) {
         super(fieldName, fieldTypeName, description, ENUM);
         this.enumValues = enumValues;
-    }
-
-    public BaseEnumField(String fieldName, String fieldTypeName, String description,
-            List<Field<S>> enumValues, Field<S> enumValue) {
-        this(fieldName, fieldTypeName, description, enumValues);
         this.enumValue = enumValue;
     }
 

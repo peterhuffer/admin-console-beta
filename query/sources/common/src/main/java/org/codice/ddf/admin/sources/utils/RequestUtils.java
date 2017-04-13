@@ -15,6 +15,10 @@ package org.codice.ddf.admin.sources.utils;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
+import static org.codice.ddf.admin.common.message.DefaultMessages.cannotConnectError;
+import static org.codice.ddf.admin.common.message.DefaultMessages.certError;
+import static org.codice.ddf.admin.common.message.DefaultMessages.unstrustedCaWarning;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
@@ -149,14 +153,14 @@ public class RequestUtils {
                                 .getStatusCode(),
                         request.getURI()
                                 .toString());
-                discoveredUrl.addMessage(SourceCommons.CANNOT_CONNECT_MESSAGE);
+                discoveredUrl.addMessage(cannotConnectError("dummyValue"));
                 return discoveredUrl;
             }
         } catch (SSLPeerUnverifiedException e) {
             LOGGER.debug("Failed cert check at [{}].",
                     request.getURI()
                             .toString());
-            discoveredUrl.addMessage(SourceCommons.CERT_ERROR_MESSAGE);
+            discoveredUrl.addMessage(certError("dummyValue"));
             return discoveredUrl;
         } catch (IOException e) {
             closeClientAndResponse(client, response);
@@ -168,18 +172,18 @@ public class RequestUtils {
                     LOGGER.debug("Untrusted cert from [{}].",
                             request.getURI()
                                     .toString());
-                    discoveredUrl.addMessage(SourceCommons.UNTRUSTED_CA_MESSAGE);
+                    discoveredUrl.addMessage(unstrustedCaWarning("dummyValue"));
                     discoveredUrl.setResponseProperties(responseToMap(response));
                     return discoveredUrl;
                 } else {
                     LOGGER.debug("Failed to connect with cert at [{}]",
                             request.getURI()
                                     .toString());
-                    discoveredUrl.addMessage(SourceCommons.CANNOT_CONNECT_MESSAGE);
+                    discoveredUrl.addMessage(cannotConnectError("dummyValue"));
                     return discoveredUrl;
                 }
             } catch (Exception e1) {
-                discoveredUrl.addMessage(SourceCommons.CANNOT_CONNECT_MESSAGE);
+                discoveredUrl.addMessage(cannotConnectError("dummyValue"));
                 return discoveredUrl;
             }
         } finally {
@@ -203,7 +207,7 @@ public class RequestUtils {
             return Optional.empty();
         } catch (IOException e) {
             LOGGER.debug("Failed to reach {}, returning an error.", url, e);
-            return Optional.of(SourceCommons.CANNOT_CONNECT_MESSAGE);
+            return Optional.of(cannotConnectError("exampleValue"));
         }
     }
 
@@ -223,7 +227,7 @@ public class RequestUtils {
             return Optional.empty();
         } catch (IOException e) {
             LOGGER.debug("Failed to reach reached hostname [{}] and port [{]}.", hostname, port);
-            return Optional.of(SourceCommons.CANNOT_CONNECT_MESSAGE);
+            return Optional.of(cannotConnectError("dummyValue"));
         }
     }
 

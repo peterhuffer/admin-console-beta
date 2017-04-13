@@ -45,7 +45,10 @@ public abstract class BaseObjectField extends BaseField<Map<String, Object>>
 
     @Override
     public void setValue(Map<String, Object> values) {
-        if(values != null) {
+        if(values == null || values.isEmpty()) {
+            getFields().stream()
+                    .forEach(field -> field.setValue(null));
+        } else {
             getFields().stream()
                     .filter(field -> values.containsKey(field.fieldName()))
                     .forEach(field -> field.setValue(values.get(field.fieldName())));
@@ -71,7 +74,7 @@ public abstract class BaseObjectField extends BaseField<Map<String, Object>>
 
     @Override
     public BaseObjectField allFieldsRequired(boolean required) {
-        super.isRequired(required);
+        this.isRequired = required;
 
         getFields().stream()
                 .map(field -> field.isRequired(required))
@@ -83,10 +86,11 @@ public abstract class BaseObjectField extends BaseField<Map<String, Object>>
 
     @Override
     public BaseObjectField isRequired(boolean required) {
-        if(!required) {
-            this.allFieldsRequired(false);
+        if(required) {
+            this.isRequired = true;
         } else {
-            super.isRequired(true);
+            this.isRequired = false;
+            this.allFieldsRequired(false);
         }
         return this;
     }

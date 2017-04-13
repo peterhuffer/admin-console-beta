@@ -31,7 +31,7 @@ public abstract class BaseField<T> implements Field<T> {
 
     private FieldBaseType fieldBaseType;
 
-    private boolean isRequired;
+    protected boolean isRequired;
 
     public BaseField(String fieldName, String fieldTypeName, String description,
             FieldBaseType fieldBaseType) {

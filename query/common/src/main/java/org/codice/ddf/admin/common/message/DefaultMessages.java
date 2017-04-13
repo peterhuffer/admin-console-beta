@@ -31,6 +31,18 @@ public class DefaultMessages {
 
     public static final String FAILED_PERSIST = "FAILED_PERSIST";
 
+    public static final String UNKNOWN_ENDPOINT = "UNKNOWN_ENDPOINT";
+
+    public static final String CANNOT_CONNECT = "CANNOT_CONNECT";
+
+    public static final String CERT_ERROR = "CERT_ERROR";
+
+    public static final String UNSTRUSTED_CA = "UNSTRUSTED_CA";
+
+    /*
+        Errors
+     */
+
     public static ErrorMessage noRootContextError(String pathOrigin) {
         return new ErrorMessage(NO_ROOT_CONTEXT, pathOrigin);
     }
@@ -61,5 +73,25 @@ public class DefaultMessages {
 
     public static ErrorMessage invalidHostnameError(String pathOrigin) {
         return new ErrorMessage(INVALID_HOSTNAME, pathOrigin);
+    }
+
+    public static ErrorMessage unknownEndpointError(String pathOrigin) {
+        return new ErrorMessage(UNKNOWN_ENDPOINT, pathOrigin);
+    }
+
+    public static ErrorMessage cannotConnectError(String pathOrigin) {
+        return new ErrorMessage(CANNOT_CONNECT, pathOrigin);
+    }
+
+    public static ErrorMessage certError(String pathOrigin) {
+        return new ErrorMessage(CERT_ERROR, pathOrigin);
+    }
+
+    /*
+        Warnings
+     */
+
+    public static WarningMessage unstrustedCaWarning(String pathOrigin) {
+        return new WarningMessage(UNSTRUSTED_CA, pathOrigin);
     }
 }

@@ -91,8 +91,8 @@ public abstract class BaseListField<T extends Field> extends BaseField<List>
     }
 
     @Override
-    public BaseListField addAll(List<T> values) {
-        values.forEach(this::add);
+    public BaseListField addAll(List<T> fields) {
+        fields.forEach(this::add);
         return this;
     }
 

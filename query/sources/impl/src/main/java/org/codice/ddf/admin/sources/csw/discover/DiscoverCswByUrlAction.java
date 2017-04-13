@@ -55,20 +55,19 @@ public class DiscoverCswByUrlAction extends BaseAction<SourceInfoField> {
 
     @Override
     public SourceInfoField performAction() {
-        SourceInfoField sourceInfoField = new SourceInfoField();
-
         String testUrl = endpointUrl.getValue();
         String un = credentialsField.username();
         String pw = credentialsField.password();
 
         DiscoveredUrl discoveredUrl = cswSourceUtils.getPreferredCswConfig(testUrl, un, pw);
-        discoveredUrl.getMessages()
-                .forEach(this::addArgumentMessage);
+        this.addArgumentMessages(discoveredUrl.getMessages());
 
         if (discoveredUrl.get(DISCOVERED_SOURCES) != null) {
+            SourceInfoField sourceInfoField = new SourceInfoField();
             sourceInfoField.configuration(discoveredUrl.get(DISCOVERED_SOURCES));
+            return sourceInfoField;
         }
 
-        return sourceInfoField;
+        return null;
     }
 }

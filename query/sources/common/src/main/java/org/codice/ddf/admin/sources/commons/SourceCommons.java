@@ -22,26 +22,18 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.codice.ddf.admin.common.message.ErrorMessage;
-import org.codice.ddf.admin.common.message.WarningMessage;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 public class SourceCommons {
 
+    // TODO: 4/13/17 REVIEW THIS BEFORE MERGE
     public static final String DISCOVERED_URL = "discoveredUrl";
 
     public static final String DISCOVERED_SOURCES = "discoveredSources";
 
-    public static final String UNKNOWN_ENDPOINT = "UNKNOWN_ENDPOINT";
-
-    public static final String CANNOT_CONNECT = "CANNOT_CONNECT";
-
-    public static final String CERT_ERROR = "CERT_ERROR";
-
-    public static final String UNSTRUSTED_CA = "UNSTRUSTED_CA";
-
-    // TODO needs to be moved?
+    // TODO needs to be moved? I'm ron burgandy?
     public static final String FACTORY_PID_KEY = "service.factoryPid";
 
     public static final String SERVICE_PID_KEY = "service.pid";
@@ -59,11 +51,7 @@ public class SourceCommons {
     /*
         Error Messages
      */
-    public static final ErrorMessage UNKNOWN_ENDPOINT_MESSAGE = new ErrorMessage(UNKNOWN_ENDPOINT);
 
-    public static final ErrorMessage CANNOT_CONNECT_MESSAGE = new ErrorMessage(CANNOT_CONNECT);
-
-    public static final ErrorMessage CERT_ERROR_MESSAGE = new ErrorMessage(CERT_ERROR);
 
     // TODO these are not specific to sources - should be moved somewhere else
     public static final String INVALID_FIELD = "INVALID_FIELD";
@@ -84,7 +72,7 @@ public class SourceCommons {
         Warning Messages
      */
 
-    public static final WarningMessage UNTRUSTED_CA_MESSAGE = new WarningMessage(UNSTRUSTED_CA);
+
 
     /*********************************************************
      * NamespaceContext for Xpath queries
